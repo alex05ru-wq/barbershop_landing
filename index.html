@@ -90,6 +90,7 @@ form .btn[disabled]{opacity:.6;cursor:progress}
 .done{display:none;background:var(--sage);border-left:6px solid var(--brass);padding:24px 26px;border-radius:6px}
 .done h3{font:800 34px/1 var(--display);margin:0 0 8px}
 .done p{margin:0}
+.again{margin-top:16px;background:none;border:0;padding:0;font:600 16px/1.4 var(--text);color:var(--green);text-decoration:underline;cursor:pointer}
 .side h3{font:800 30px/1 var(--display);margin:0 0 14px}
 .side dl{margin:0 0 28px;display:grid;gap:14px}
 .side dt{color:var(--muted);font-size:14px}
@@ -212,6 +213,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <div class="done" id="done" tabindex="-1">
           <h3>Заявка отправлена</h3>
           <p>Перезвоним в течение 15 минут в рабочее время. Если удобнее — напишите нам в Telegram.</p>
+          <button type="button" class="again" id="againBtn">Отправить ещё одну заявку</button>
         </div>
       </div>
 
@@ -239,7 +241,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* ===================== НАСТРОЙКИ ===================== */
 // Ссылка веб-приложения Apps Script (заканчивается на /exec).
 // Пока пусто — форма работает в демо-режиме и никуда не отправляет.
-const FORM_URL = 'https://script.google.com/macros/s/AKfycbxDTOzwQDB9VyUvsiToZ-AlUGJTSYuoA4ec183ATgLRNpyut8vwUrix86Cb2i_LpxNL/exec'; 
+const FORM_URL = 'https://script.google.com/macros/s/AKfycbxDTOzwQDB9VyUvsiToZ-AlUGJTSYuoA4ec183ATgLRNpyut8vwUrix86Cb2i_LpxNL/exec';
 // Ссылка на Telegram-бота записи
 const TELEGRAM_BOT = 'https://t.me/alex_zayavki_demo_bot';
 
@@ -321,6 +323,16 @@ form.addEventListener('submit', async e => {
     btn.disabled = false;
     btn.textContent = 'Отправить заявку';
   }
+});
+
+// «Отправить ещё одну заявку»: очищаем форму и показываем её снова
+document.getElementById('againBtn').addEventListener('click', () => {
+  form.reset();
+  btn.disabled = false;
+  btn.textContent = 'Отправить заявку';
+  document.getElementById('done').style.display = 'none';
+  form.style.display = '';
+  form.elements.name.focus();
 });
 </script>
 </body>
